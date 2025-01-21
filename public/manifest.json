@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "enPlugin",
+    "version": "1.0.0",
+    "description": "实时翻译单词并记录历史",
+    "permissions": [
+      "storage",
+      "activeTab"
+    ],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "icon.png"
+    },
+    "icons": {
+      "48": "icon.png"
+    }
+  }
