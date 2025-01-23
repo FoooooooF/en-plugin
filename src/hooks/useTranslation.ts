@@ -1,21 +1,28 @@
-import { useState } from 'react';
-import { translateWord } from '../services/translationService';
+import { useState, useEffect } from 'react'
+import { translateWord } from '@/services/translationService'
 
-export const useTranslation = () => {
-  const [translation, setTranslation] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+export const useTranslation = (word: string) => {
+  const [translation, setTranslation] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const translate = async (word: string) => {
-    setIsLoading(true);
-    try {
-      const result = await translateWord(word);
-      setTranslation(result);
-    } catch (error) {
-      setTranslation(null);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    if (!word) return
+
+    const fetchTranslation = async () => {
+      setIsLoading(true)
+      try {
+        const result = await translateWord(word)
+        setTranslation(result)
+      } catch (error) {
+        console.error('翻译错误', error)
+        setTranslation(null)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  };
 
-  return { translation, isLoading, translate };
-};
+    fetchTranslation()
+  }, [word])
+
+  return { translation, isLoading }
+}
